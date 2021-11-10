@@ -122,24 +122,33 @@
 		};
 	}
 
-	if (!global.TextEncoder && global.require) {
-		global.TextEncoder = require("util").TextEncoder;
-	}
-	if (!global.TextEncoder) {
-		throw new Error("global.TextEncoder is not available, polyfill required");
-	}
+	// if (!global.TextEncoder && global.require) {
+	// 	global.TextEncoder = require("util").TextEncoder;
+	// }
+	// if (!global.TextEncoder) {
+	// 	throw new Error("global.TextEncoder is not available, polyfill required");
+	// }
 
-	if (!global.TextDecoder && global.require) {
-		global.TextDecoder = require("util").TextDecoder;
-	}
-	if (!global.TextDecoder) {
-		throw new Error("global.TextDecoder is not available, polyfill required");
-	}
+	// if (!global.TextDecoder && global.require) {
+	// 	global.TextDecoder = require("util").TextDecoder;
+	// }
+	// if (!global.TextDecoder) {
+	// 	throw new Error("global.TextDecoder is not available, polyfill required");
+	// }
 
 	// End of polyfills for common API.
 
-	const encoder = new TextEncoder("utf-8");
-	const decoder = new TextDecoder("utf-8");
+	// const encoder = new TextEncoder("utf-8");
+	// const decoder = new TextDecoder("utf-8");
+	let encoder = {};
+	encoder.encode = function(str) {
+		return wx.encode({ data: str, format: 'utf-8' });
+	}
+
+	let decoder = {};
+	decoder.decode = function(str) {
+		return wx.decode({ data: str, format: 'utf-8' });
+	}
 
 	global.Go = class {
 		constructor() {
